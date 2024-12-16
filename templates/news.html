@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LiveLens</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma/css/bulma.min.css">
+</head>
+<body>
+    <section class="section">
+        <div class="container">
+            <!-- Dashboard Title -->
+            <div class="has-text-centered mb-5">
+                <h1 class="title is-2">LiveLens</h1>
+                <p class="subtitle">Your Central Hub for Weather, Currency, and News</p>
+            </div>
+
+            <!-- Weather and Currency Sections -->
+            <div class="columns">
+                <!-- Weather Section -->
+                <div class="column">
+                    <div class="card">
+                        <header class="card-header">
+                            <p class="card-header-title">
+                                Current Weather
+                            </p>
+                        </header>
+                        <div class="card-content">
+                            <form action="">
+                                <label for="city">City</label>
+                                <input class="input" type="text" name="city" placeholder="Enter city" id="city">
+                                <button class="button is-primary mt-2" type="submit">Submit</button>
+                            </form>
+                            <hr>
+                            <p><strong>City:</strong> {{weather.city}}, {{weather.country}}</p>
+                            <p><strong>Description:</strong> {{weather.description}}</p>
+                            <p><strong>Temperature:</strong> {{weather.temperature}}&#8451;</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Currency Section -->
+                <div class="column">
+                    <div class="card">
+                        <header class="card-header">
+                            <p class="card-header-title">
+                                Currency Exchange
+                            </p>
+                        </header>
+                        <div class="card-content">
+                            <form action="">
+                                <div class="field">
+                                    <label for="currency_from" class="label">From:</label>
+                                    <div class="control">
+                                        <div class="select">
+                                            <select name="currency_from" id="currency_from">
+                                                {% for currency in currencies %}
+                                                <option value="{{currency}}" {{'selected ="selected"' if currency_from==currency}}>{{currency}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="field">
+                                    <label for="currency_to" class="label">To:</label>
+                                    <div class="control">
+                                        <div class="select">
+                                            <select name="currency_to" id="currency_to">
+                                                {% for currency in currencies %}
+                                                <option value="{{currency}}" {{'selected="selected"' if currency_to==currency}}>{{currency}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="button is-primary" type="submit">Submit</button>
+                            </form>
+                            <hr>
+                            <p><strong>Exchange Rate:</strong> 1 {{currency_from}} = {{rate}} {{currency_to}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Centered News Section -->
+            <div class="columns is-centered mt-5">
+                <div class="column is-full">
+                    <div class="card">
+                        <header class="card-header">
+                            <p class="card-header-title">
+                                News Headlines
+                            </p>
+                        </header>
+                        <div class="card-content">
+                            <form action="">
+                                <label for="publication">Publication</label>
+                                <input class="input" type="text" name="publication" placeholder="e.g. BBC, CNN, FOX" id="publication">
+                                <button class="button is-primary mt-2" type="submit">Submit</button>
+                            </form>
+                            <hr>
+                            {% for article in articles %}
+                            <div class="content">
+                                <h2><a href="{{article.link}}" target="_blank">{{article.title}}</a></h2>
+                                <p><strong>Published:</strong> {{article.published}}</p>
+                                <p>{{article.summary}}</p>
+                            </div>
+                            <hr>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
